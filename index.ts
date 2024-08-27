@@ -3,6 +3,8 @@ const app = express()
 const mongoose = require('mongoose')
 const cors = require('cors')
 const contactSubmission = require('./routers/contactSubmission.ts')
+const limiter = require('./middleware/rateLimiter')
+
 require('dotenv').config()
 
 app.use(cors({
@@ -30,6 +32,9 @@ db.on('error', (err: string) => {
 db.on('disconnected', () => {
   console.log('Disconnected from MongoDB')
 })
+
+// rate limiter
+app.use(limiter)
 
 app.use('/contact', contactSubmission)
 
