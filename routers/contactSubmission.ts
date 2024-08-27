@@ -42,7 +42,7 @@ router.post('/submit', async (req: Request, res: Response) => {
             console.warn(`Duplicate email entered: ${formattedEmail}`)
             return res.status(400).json({ message: "Duplicate email" })
         }
-
+        console.log(error)
         return res.status(400).json({ message: "Error adding submission" })
     }
 })
