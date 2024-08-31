@@ -2,13 +2,13 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 const cors = require('cors')
-const contactSubmission = require('./routers/contactSubmission.ts')
+const kinsmanCompRoutes = require('./routers/kinsmanCompRoutes.ts')
 const limiter = require('./middleware/rateLimiter')
 
 require('dotenv').config()
 
 app.use(cors({
-    origin: '*', // Insert frontend URL here
+    origin: process.env.ORIGIN_URL, // Insert frontend URL here
     credentials: true,
 }))
 
@@ -36,7 +36,7 @@ db.on('disconnected', () => {
 // rate limiter
 app.use(limiter)
 
-app.use('/contact', contactSubmission)
+app.use('/api/kinsman', kinsmanCompRoutes)
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is listening on port ${process.env.PORT}`)
