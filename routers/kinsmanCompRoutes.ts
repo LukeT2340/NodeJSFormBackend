@@ -1,5 +1,5 @@
 import express, { Response, Request } from "express"
-import rateLimit from "express-rate-limit"
+import { rateLimitMiddleware } from "../middleware/rateLimiter"
 const router = express.Router()
 const bodyParser = require("body-parser")
 const Submission = require("../models/KinsmanComp.ts")
@@ -7,7 +7,7 @@ const { isValidState } = require("../utils/miscellaneous")
 
 router.use(bodyParser.json())
 
-router.use(rateLimit)
+router.use(rateLimitMiddleware)
 
 // Submit submission to kinsman competition
 router.post("/submit", async (req: Request, res: Response) => {
@@ -22,7 +22,7 @@ router.post("/submit", async (req: Request, res: Response) => {
   if (!isValidState(state)) {
     return res.status(400).json({
       message:
-        'State was not provided or was provided in the incorrect format. Must be one of "NSW", "NT", "QLD", "ACT", "WA", "VIC", "TAS", "SA" case-sensitive.',
+        'State was not provided or was provided in the incorrect format. Must be one of { "NSW", "NT", "QLD", "ACT", "WA", "VIC", "TAS", "SA" } case-sensitive.',
     })
   }
 
@@ -50,7 +50,7 @@ router.post("/submit", async (req: Request, res: Response) => {
       const duplicateField = Object.keys(error.keyPattern)[0]
       return res.status(422).json({ duplicateField })
     }
-    return res.status(400).json({ message: "Unknown error submitting" })
+    return res.status(400).json({ message: "Error submitting form" })
   }
 })
 
