@@ -34,8 +34,8 @@ const kinsmanCompSubmissionSchema = new mongoose.Schema({
   },
   state: {
     type: String,
-    allowNull: false,
     required: true,
+    enum: ["NSW", "NT", "QLD", "ACT", "WA", "VIC", "TAS", "SA"],
   },
   createdAt: {
     type: Date,

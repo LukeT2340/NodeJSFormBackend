@@ -21,9 +21,3 @@ export const connectToDb = () => {
     console.log("Disconnected from MongoDB server")
   })
 }
-
-export const isValidState = (state: string) => {
-  const validStates = ["NSW", "NT", "QLD", "ACT", "WA", "VIC", "TAS", "SA"]
-
-  return validStates.includes(state)
-}
