@@ -1,8 +1,6 @@
 require("dotenv").config()
 const mongoose = require("mongoose")
-
 const mongoURI = process.env.MONGO_URL
-
 const db = mongoose.connection
 
 export const connectToDb = () => {
@@ -12,7 +10,7 @@ export const connectToDb = () => {
   })
 
   db.on("connected", () => {
-    console.log("Connected to MongoDB")
+    console.log("Connected to MongoDB server")
   })
 
   db.on("error", (err: string) => {
@@ -20,6 +18,12 @@ export const connectToDb = () => {
   })
 
   db.on("disconnected", () => {
-    console.log("Disconnected from MongoDB")
+    console.log("Disconnected from MongoDB server")
   })
+}
+
+export const isValidState = (state: string) => {
+  const validStates = ["NSW", "NT", "QLD", "ACT", "WA", "VIC", "TAS", "SA"]
+
+  return validStates.includes(state)
 }
